@@ -11,22 +11,23 @@ module.exports = (pool) => {
       return rows[0] || null;
     },
 
-    create: async ({ name, price }) => {
+    create: async ({ name, price, category }) => {
       const id = uuidv4();
 
       await pool.query("INSERT INTO products (id, name, price, category) VALUES (?, ?, ?, ?)", [
         id,
         name,
         price,
+        category
       ]);
 
-      return { id, name, price };
+      return { id, name, price, category };
     },
 
-    updateById: async (id, { name, price }) => {
+    updateById: async (id, { name, price, category }) => {
       const result = await pool.query(
-        "UPDATE products SET name = ?, price = ? WHERE id = ?",
-        [name, price, id, category]
+        "UPDATE products SET name = ?, price = ?, category = ?, WHERE id = ?",
+        [name, price, category, id]
       );
       return result.affectedRows > 0;
     },

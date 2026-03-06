@@ -2,8 +2,8 @@ module.exports = (service) => {
   return {
     getAll: async (req, res) => {
       try {
-        const products = await service.listProducts();
-        return res.status(200).json(products);
+        const orders = await service.listOrders();
+        return res.status(200).json(orders);
       } catch (err) {
         return res.status(500).json({ error: "Erreur serveur", details: err.message });
       }
@@ -12,13 +12,13 @@ module.exports = (service) => {
     getOne: async (req, res) => {
       try {
         const id = req.params.id; // UUID => string que l'on met dans l'url
-        const product = await service.getProductById(id);
+        const order = await service.getOrderById(id);
 
-        if (!product) {
+        if (!order) {
           return res.status(404).json({ error: "Produit introuvable" });
         }
 
-        return res.status(200).json(product);
+        return res.status(200).json(order);
       } catch (err) {
         return res.status(500).json({ error: "Erreur serveur", details: err.message });
       }
@@ -26,7 +26,7 @@ module.exports = (service) => {
 
     create: async (req, res) => {
       try {
-        const created = await service.createProduct(req.body);
+        const created = await service.createOrder(req.body);
         return res.status(201).json(created);
       } catch (err) {
         return res.status(500).json({ error: "Erreur serveur", details: err.message });
@@ -36,7 +36,7 @@ module.exports = (service) => {
     update: async (req, res) => {
       try {
         const id = req.params.id;
-        const updated = await service.updateProduct(id, req.body);
+        const updated = await service.updateOrder(id, req.body);
 
         if (!updated) {
           return res.status(404).json({ error: "Produit introuvable" });
@@ -51,7 +51,7 @@ module.exports = (service) => {
     remove: async (req, res) => {
       try {
         const id = req.params.id;
-        const ok = await service.deleteProduct(id);
+        const ok = await service.deleteOrder(id);
 
         if (!ok) {
           return res.status(404).json({ error: "Produit introuvable" });
@@ -62,5 +62,5 @@ module.exports = (service) => {
         return res.status(500).json({ error: "Erreur serveur", details: err.message });
       }
     }
-}
+  }
 }

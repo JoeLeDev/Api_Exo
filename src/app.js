@@ -1,6 +1,7 @@
 const express = require("express");
 const createProductRoutes = require("./modules/products/product.routes");
 const createUserRoutes = require("./modules/users/user.route")
+const createOrderRoutes = require("./modules/orders/orders.routes")
 const appError = require("./core/errors/appError")
 
 function createApp(pool) {
@@ -15,6 +16,7 @@ function createApp(pool) {
 
   app.use("/api/products", createProductRoutes(pool));
   app.use("/api/users", createUserRoutes(pool));
+  app.use("/api/orders", createOrderRoutes(pool))
 
   app.use(appError)
 
